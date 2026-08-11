@@ -1,0 +1,52 @@
+{
+  "title": "Mochi Video Generator",
+  "description": "Generate videos with Mochi - Video generation using Mochi 1 by Genmo. This worker provides high-quality video generation from text prompts with advanced configuration options.",
+  "type": "serverless",
+  "category": "video",
+  "iconUrl": "https://avatars.githubusercontent.com/u/105883948?s=200&v=4",
+  "config": {
+    "runsOn": "GPU",
+    "containerDiskInGb": 50,
+    "gpuCount": 1,
+    "gpuIds": "ADA_80_PRO",
+    "allowedCudaVersions": [
+      "12.7",
+      "12.6"
+    ],
+    "runtime": {
+      "idleTimeout": 600,
+      "maxExecutionTime": 3600
+    },
+    "presets": [
+      {
+        "name": "Default",
+        "defaults": {}
+      },
+      {
+        "name": "Quality Optimized",
+        "defaults": {
+          "PRECISION": "fp32",
+          "BATCH_SIZE": 1
+        }
+      },
+      {
+        "name": "Performance Optimized",
+        "defaults": {
+          "PRECISION": "fp16",
+          "BATCH_SIZE": 4
+        }
+      }
+    ],
+    "env": [
+      {
+        "key": "REFRESH_WORKER",
+        "input": {
+          "name": "Refresh Worker",
+          "type": "boolean",
+          "description": "When enabled, the worker will stop after each finished job to have a clean state",
+          "default": false
+        }
+      }
+    ]
+  }
+}
