@@ -18,6 +18,14 @@ Demo
 
 ![example output preview](https://images.unsplash.com/photo-1518779578993-ec3579fee39f?auto=format&fit=crop&w=800&q=60)
 
+Table of Contents
+- [Quick Start](#getting-started-local--dev)
+- [API Reference](#example-api-request-body)
+- [Files included](#files-included)
+- [Usage](#usage-examples)
+- [Deployment](#deployment)
+- [Development](#development)
+
 Quick links
 - API input reference — see "API" below
 - Deployment — RunPod GitHub Integration
@@ -34,6 +42,10 @@ Getting started (Local / Dev)
 4. Start the worker (example)
 
    docker compose up --build
+
+Files included
+- `input.example.json` — example API input body you can POST to the /generate endpoint
+- `docker-compose.example.yml` — example to run the worker locally with environment variables
 
 Example API (request body)
 
@@ -87,7 +99,7 @@ VAE Parameters
 | `frame_batch_size`           | Number of frames to process in parallel    | `8`     |
 
 Usage examples
-- Run a quick local job: curl -X POST http://localhost:8080/generate -H 'Content-Type: application/json' -d @input.json
+- Run a quick local job: curl -X POST http://localhost:8080/generate -H 'Content-Type: application/json' -d @input.example.json
 - Output file: the worker produces a video file (MP4/WebM) and an optional preview GIF if configured.
 
 Deployment

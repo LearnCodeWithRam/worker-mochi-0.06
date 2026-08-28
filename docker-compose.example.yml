@@ -1,0 +1,21 @@
+version: "3.8"
+
+services:
+  worker:
+    image: your-docker-image:latest
+    build: .
+    environment:
+      - RUNPOD_API_KEY=${RUNPOD_API_KEY}
+      - UPLOADTHING_ENDPOINT=${UPLOADTHING_ENDPOINT}
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./:/app
+    command: ["python", "app.py"]
