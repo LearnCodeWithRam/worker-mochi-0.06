@@ -1,18 +1,41 @@
 # worker-mochi
 
 [![RunPod](https://api.runpod.io/badge/rachfop/worker-mochi)](https://www.runpod.io/console/hub/rachfop/worker-mochi)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
-> Generate videos with Mochi as an endpoint on RunPod
 
-## Features
+![worker-mochi hero image](https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1200&q=80)
 
-- Video generation using [Mochi 1](https://github.com/genmoai/mochi) by [Genmo](https://genmo.ai)
-- Automatic model loading and initialization
-- [UploadThing](https://uploadthing.com/) integration for video upload
+Generate videos using Mochi (Genmo) as an endpoint on RunPod. This worker automates loading the model, running inference across frames, and optionally uploading results via UploadThing.
 
-## API Reference
+Highlights
+- Video generation using Mochi 1 by Genmo (https://github.com/genmoai/mochi)
+- Automatic model loading and initialization on container start
+- UploadThing integration for storing and sharing outputs
+- Configurable generation parameters and VAE tiling to handle large frames
 
-### Input Parameters
+Demo
+
+![example output preview](https://images.unsplash.com/photo-1518779578993-ec3579fee39f?auto=format&fit=crop&w=800&q=60)
+
+Quick links
+- API input reference — see "API" below
+- Deployment — RunPod GitHub Integration
+- Development & Contributing — .github/CONTRIBUTING.md
+
+Getting started (Local / Dev)
+
+1. Clone the repo
+
+   git clone https://github.com/LearnCodeWithRam/worker-mochi-0.06.git
+
+2. Build or pull the Docker image (if provided) or run locally in a Python venv
+3. Configure secrets: RUNPOD_API_KEY, UPLOADTHING_ENDPOINT (if using upload), model paths
+4. Start the worker (example)
+
+   docker compose up --build
+
+Example API (request body)
 
 ```json
 {
@@ -38,7 +61,7 @@
 }
 ```
 
-#### Core Parameters
+Core Parameters
 
 | Parameter         | Description                                                            | Default |
 | ----------------- | ---------------------------------------------------------------------- | ------- |
@@ -51,7 +74,7 @@
 | `cfg`             | Classifier-free guidance scale (how closely to follow the prompt)      | `6`     |
 | `num_frames`      | Number of frames to generate                                           | `31`    |
 
-#### VAE Parameters
+VAE Parameters
 
 | Parameter                    | Description                                | Default |
 | ---------------------------- | ------------------------------------------ | ------- |
@@ -63,14 +86,31 @@
 | `auto_tile_size`             | Automatically determine tile size          | `false` |
 | `frame_batch_size`           | Number of frames to process in parallel    | `8`     |
 
-## Deployment
+Usage examples
+- Run a quick local job: curl -X POST http://localhost:8080/generate -H 'Content-Type: application/json' -d @input.json
+- Output file: the worker produces a video file (MP4/WebM) and an optional preview GIF if configured.
 
-Deploy this worker on RunPod using the [GitHub Integration](https://docs.runpod.io/serverless/github-integration).
+Deployment
 
-## Development
+Deploy this worker on RunPod using the GitHub Integration:
+https://docs.runpod.io/serverless/github-integration
 
-For development and contribution guidelines, please see our [Contributing Guide](.github/CONTRIBUTING.md).
+Development
 
-## License
+- See .github/CONTRIBUTING.md for development guidelines, testing, and how to run locally.
+- Recommended: use a GPU-enabled environment for reasonable generation times.
 
-[MIT License](LICENSE)
+Contributing
+
+- Open issues for bugs or feature requests
+- Send PRs against the default branch; include tests or a demo where possible
+- Code style: follow the existing repository conventions
+
+License
+
+This project is released under the MIT License. See LICENSE for details.
+
+Acknowledgements
+
+- Mochi / Genmo — https://github.com/genmoai/mochi
+- RunPod — https://www.runpod.io
